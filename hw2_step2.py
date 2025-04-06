@@ -1,5 +1,9 @@
 import pandas as pd
 
+import nltk
+# nltk.download('stopwords')
+# nltk.download('punkt_tab')
+
 from nltk.corpus import stopwords
 from gensim.corpora import Dictionary
 from gensim.models import TfidfModel
@@ -20,14 +24,14 @@ def text2tokens(text):
 	ps = PorterStemmer()
 	text = text.lower()
 	textList = word_tokenize(text)
-	textList = [word for word in textList if word not in stopwords and len(word) >= 3]
+	textList = [word for word in textList if word not in stop_words and len(word) >= 3]
 
 	textList = [ps.stem(word) for word in textList]
 	return textList
     
 
-def gen_bow(df):
-	df['tokens'] = df['review'].apply(text2tokens)
+def gen_bow(df, column):
+	df['tokens'] = df[column].apply(text2tokens)
 	dct = Dictionary(df['tokens'])
 	dct.filter_extremes(no_below=5, no_above=0.5)
 	df['bow'] = df['tokens'].apply(dct.doc2bow)
@@ -43,13 +47,9 @@ def gen_bow(df):
 	df.drop('tokens', axis=1, inplace=True)	
 	return df, worddict
 
-print(text2tokens("In this offering, one only has to view the current Westminster Kennel Club's annual offering to see the parallels."))
 
-# df = pd.read_csv('my.csv')
-# df, dct = gen_bow(df)
-# # df.to_csv('q1_answer.csv', index=False)
-# print(df)
+# print(text2tokens("In this offering, one only has to view the current Westminster Kennel Club's annual offering to see the parallels."))
 
-# def get_term_doc_prob(df, dct, token):
-#     tfidf_model = TfidfModel(df['bow'].to_list())
-    
+orioles_df = pd.read_json('orioles.json')
+# orioles_df = gen_bow(orioles_df, '')
+orioles_df.columns
