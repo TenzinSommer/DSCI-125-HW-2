@@ -20,44 +20,155 @@ reddit = praw.Reddit(
     user_agent = USER_AGENT 
 )
 
-subreddits = ['redsox','nyyankees','orioles','torontobluejays','tampabayrays']
-
 urls = []
 
-for sub in subreddits:
-	for thread in reddit.subreddit(sub).top(time_filter="all", limit=150):
-		url = thread.url
-		if re.search('www.reddit.com/r/', url):
-			urls.append(url)
+for thread in reddit.subreddit('redsox').top(time_filter="all", limit=150):
+	url = thread.url
+	if re.search('www.reddit.com/r/', url):
+		urls.append(url)
 
-	headers = {
-		# Tenzin
-		'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:136.0) Gecko/20100101 Firefox/136.0' 
+headers = {
+	# Tenzin
+	'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:136.0) Gecko/20100101 Firefox/136.0' 
 
-		# Elliot
-		# "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15"
-	}
+	# Elliot
+	# "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15"
+}
 
-	counter = 1
-	filename = sub + '.json'
-	
-	with open(filename, 'w+') as fp:
-		for url in urls:
-			# print(time.time())
-			try:
-				response = requests.get(url + ".json", timeout=10, headers = headers)
-				json_data = response.json()
-				if (len(json_data) >= 2):
-					jstr = json.dumps(json_data)
-					fp.write(jstr + '\n')
-				time.sleep(np.random.uniform(1, 5))
-				print(f"{counter}: Successfully fetching {url}")
-				
-			except Exception as e:
-				print(f"{counter}: Error fetching {url}")
-				print(e)
+counter = 1
+filename = 'redsox.json'
 
-			counter += 1
+with open(filename, 'w+') as fp:
+	for url in urls:
+		# print(time.time())
+		try:
+			response = requests.get(url + ".json", timeout=10, headers = headers)
+			json_data = response.json()
+			if (len(json_data) >= 2):
+				jstr = json.dumps(json_data)
+				fp.write(jstr + '\n')
+			time.sleep(10)
+			print(f"{counter}: Successfully fetching {url}")
+			
+		except Exception as e:
+			print(f"{counter}: Error fetching {url}")
+			print(e)
+
+		counter += 1
+
+urls.clear()
+
+for thread in reddit.subreddit('nyyankees').top(time_filter="all", limit=150):
+	url = thread.url
+	if re.search('www.reddit.com/r/', url):
+		urls.append(url)
+
+counter = 1
+filename = 'yankees.json'
+
+with open(filename, 'w+') as fp:
+	for url in urls:
+		# print(time.time())
+		try:
+			response = requests.get(url + ".json", timeout=10, headers = headers)
+			json_data = response.json()
+			if (len(json_data) >= 2):
+				jstr = json.dumps(json_data)
+				fp.write(jstr + '\n')
+			time.sleep(10)
+			print(f"{counter}: Successfully fetching {url}")
+			
+		except Exception as e:
+			print(f"{counter}: Error fetching {url}")
+			print(e)
+
+		counter += 1
+
+urls.clear()
+
+for thread in reddit.subreddit('orioles').top(time_filter="all", limit=150):
+	url = thread.url
+	if re.search('www.reddit.com/r/', url):
+		urls.append(url)
+
+counter = 1
+filename = 'orioles.json'
+
+with open(filename, 'w+') as fp:
+	for url in urls:
+		# print(time.time())
+		try:
+			response = requests.get(url + ".json", timeout=10, headers = headers)
+			json_data = response.json()
+			if (len(json_data) >= 2):
+				jstr = json.dumps(json_data)
+				fp.write(jstr + '\n')
+			time.sleep(10)
+			print(f"{counter}: Successfully fetching {url}")
+			
+		except Exception as e:
+			print(f"{counter}: Error fetching {url}")
+			print(e)
+
+		counter += 1
+
+urls.clear()
+
+for thread in reddit.subreddit('torontobluejays').top(time_filter="all", limit=150):
+	url = thread.url
+	if re.search('www.reddit.com/r/', url):
+		urls.append(url)
+
+counter = 1
+filename = 'torontobluejays.json'
+
+with open(filename, 'w+') as fp:
+	for url in urls:
+		# print(time.time())
+		try:
+			response = requests.get(url + ".json", timeout=10, headers = headers)
+			json_data = response.json()
+			if (len(json_data) >= 2):
+				jstr = json.dumps(json_data)
+				fp.write(jstr + '\n')
+			time.sleep(10)
+			print(f"{counter}: Successfully fetching {url}")
+			
+		except Exception as e:
+			print(f"{counter}: Error fetching {url}")
+			print(e)
+
+		counter += 1
+
+urls.clear()
+
+for thread in reddit.subreddit('tampabayrays').top(time_filter="all", limit=150):
+	url = thread.url
+	if re.search('www.reddit.com/r/', url):
+		urls.append(url)
+
+counter = 1
+filename = 'tampabayrays.json'
+
+with open(filename, 'w+') as fp:
+	for url in urls:
+		# print(time.time())
+		try:
+			response = requests.get(url + ".json", timeout=10, headers = headers)
+			json_data = response.json()
+			if (len(json_data) >= 2):
+				jstr = json.dumps(json_data)
+				fp.write(jstr + '\n')
+			time.sleep(10)
+			print(f"{counter}: Successfully fetching {url}")
+			
+		except Exception as e:
+			print(f"{counter}: Error fetching {url}")
+			print(e)
+
+		counter += 1
+
+urls.clear()
 
 df = pd.read_csv('games.csv')
 
