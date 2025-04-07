@@ -1,8 +1,9 @@
 import pandas as pd
 
 import nltk
-# nltk.download('stopwords')
-# nltk.download('punkt_tab')
+nltk.download('wordnet')
+nltk.download('stopwords')
+nltk.download('punkt_tab')
 
 from nltk.corpus import stopwords
 from gensim.corpora import Dictionary
@@ -11,17 +12,17 @@ from gensim.models import TfidfModel
 from nltk.tokenize import word_tokenize
 from nltk.stem import PorterStemmer
 
-
 # Data Modeling 
 # pick two topics to compare
 # develop a way to identify which topic a post is talking about 
 # check occurences of different topics of conversation over time
 #   could these different conversation topics appear during a game period more often?
-# 
+
 
 def text2tokens(text):
 	stop_words = set(stopwords.words('english'))
 	ps = PorterStemmer()
+	
 	text = text.lower()
 	textList = word_tokenize(text)
 	textList = [word for word in textList if word not in stop_words and len(word) >= 3]
@@ -29,7 +30,6 @@ def text2tokens(text):
 	textList = [ps.stem(word) for word in textList]
 	return textList
     
-
 def gen_bow(df, column):
 	df['tokens'] = df[column].apply(text2tokens)
 	dct = Dictionary(df['tokens'])
@@ -47,9 +47,15 @@ def gen_bow(df, column):
 	df.drop('tokens', axis=1, inplace=True)	
 	return df, worddict
 
+posNegWords = pd.read_excel('posNegList.xlsx')
+posWords = posNegWords['Positive Sense Word List']
+posWords = posWords.dropna()
+negWords = posNegWords['Negative Sense Word List']
+negWords = negWords.dropna()
 
-# print(text2tokens("In this offering, one only has to view the current Westminster Kennel Club's annual offering to see the parallels."))
+or_df = pd.read_csv('hw2_step1_or_posts.csv')
 
-orioles_df = pd.read_json('orioles.json')
-# orioles_df = gen_bow(orioles_df, '')
-orioles_df.columns
+# or_df['tokens'] = or_df['text'].apply(text2tokens)
+
+# print(or_df)
+print(or_df.dtypes)
