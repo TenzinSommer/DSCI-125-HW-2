@@ -57,5 +57,5 @@ or_df = pd.read_csv('hw2_step1_or_posts.csv')
 
 # or_df['tokens'] = or_df['text'].apply(text2tokens)
 
-# print(or_df)
-print(or_df.dtypes)
+print(or_df)
+# print(or_df.dtypes)
