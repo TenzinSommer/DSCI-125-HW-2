@@ -53,8 +53,21 @@ posWords = posWords.dropna()
 negWords = posNegWords['Negative Sense Word List']
 negWords = negWords.dropna()
 
+def findPosNegCount(list):
+	posCount = 0
+	negCount = 0
+	
+	for word in list:
+		if word in posWords:
+			posCount += 1
+		elif word in negWords:
+			negCount += 1
+	
+	return posCount - negCount
+			
 or_df = pd.read_csv('hw2_step1_or_posts.csv')
 
 or_df['tokens'] = or_df['text'].apply(text2tokens)
 
+or_df['posOrNeg'] = or_df['tokens'].apply(findPosNegCount)
 print(or_df)
