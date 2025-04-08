@@ -22,7 +22,7 @@ from nltk.stem import PorterStemmer
 def text2tokens(text):
 	stop_words = set(stopwords.words('english'))
 	ps = PorterStemmer()
-	
+	text = str(text)
 	text = text.lower()
 	textList = word_tokenize(text)
 	textList = [word for word in textList if word not in stop_words and len(word) >= 3]
@@ -55,7 +55,6 @@ negWords = negWords.dropna()
 
 or_df = pd.read_csv('hw2_step1_or_posts.csv')
 
-# or_df['tokens'] = or_df['text'].apply(text2tokens)
+or_df['tokens'] = or_df['text'].apply(text2tokens)
 
 print(or_df)
-# print(or_df.dtypes)
