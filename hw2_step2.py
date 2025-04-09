@@ -1,9 +1,9 @@
 import pandas as pd
 
 import nltk
-nltk.download('wordnet')
-nltk.download('stopwords')
-nltk.download('punkt_tab')
+# nltk.download('wordnet')
+# nltk.download('stopwords')
+# nltk.download('punkt_tab')
 
 from nltk.corpus import stopwords
 from gensim.corpora import Dictionary
@@ -52,6 +52,8 @@ posWords = posNegWords['Positive Sense Word List']
 posWords = posWords.dropna()
 negWords = posNegWords['Negative Sense Word List']
 negWords = negWords.dropna()
+
+
 
 def findPosNegCount(list):
 	posCount = 0
